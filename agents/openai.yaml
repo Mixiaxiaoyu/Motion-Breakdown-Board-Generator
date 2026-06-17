@@ -1,0 +1,4 @@
+interface:
+  display_name: "动效运动说明图生成器"
+  short_description: "从单张图片生成专业动效运动说明图与循环动画拆解方案"
+  default_prompt: "Use $motion-breakdown-board-generator 基于我上传的图片生成一张 8 秒无缝循环的动效运动说明图。"
