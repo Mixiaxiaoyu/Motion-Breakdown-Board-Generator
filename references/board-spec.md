@@ -26,6 +26,8 @@ Choose one dominant motion family and one supporting motion family. Avoid stacki
 - If arrows, labels, and callouts compete with the character, move the annotations outward first.
 - Give the rightmost and bottom-most stage panels extra breathing room because they are the most likely to be clipped by dense layouts.
 - Add arrows, motion paths, ghosted intermediate positions, timing tags, and compact callouts.
+- Prefer white or very light arrows for the review board because they read more clearly as motion instruction graphics over saturated imagery.
+- If a white arrow risks blending into a bright area, add a subtle darker outline, glow edge, or shadow instead of switching immediately to a saturated arrow color.
 - Include a small `0s -> 8s -> 0s` loop timeline.
 - Keep the visual language clean, neutral, and professional.
 - Make the board look like a motion proposal sheet or animation breakdown board.
@@ -55,7 +57,7 @@ Design an 8-second seamless loop with a locked camera and break it into {phase_c
 Board layout:
 - one large reference panel
 - {phase_count} smaller numbered stages
-- arrows and motion paths
+- white or very light arrows and motion paths
 - ghosted overlays to show position changes
 - concise callout labels
 - timing labels for each phase
@@ -93,7 +95,7 @@ Stage labels:
 7. {phase_7_label} - {phase_7_action}
 
 Visual direction:
-clean professional motion design sheet, presentation-ready, precise graphic annotations, strong readability, polished layout, consistent subject across all stages, seamless loop logic visible from the last stage back to the first, full character visibility in all stage panels, balanced spacing, no edge clipping
+clean professional motion design sheet, presentation-ready, precise graphic annotations, strong readability, polished layout, consistent subject across all stages, seamless loop logic visible from the last stage back to the first, full character visibility in all stage panels, balanced spacing, no edge clipping, white or very light motion arrows with subtle outline when needed for contrast
 
 Do not add unrelated scenery, extra characters, cinematic explosions, random particles, unnecessary light streaks, or unrelated FX.
 ```

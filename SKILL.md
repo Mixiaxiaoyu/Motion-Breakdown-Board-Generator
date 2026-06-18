@@ -7,7 +7,7 @@ description: Analyze a user-provided image and turn it into a professional motio
 
 Create a motion concept from a single still image and express it as one professional static board. Treat the first output as a design proposal image, not a video render, not a poster, and not a storyboard full of scene changes.
 
-After the board is ready, optionally hand it off to Dreamina（即梦） for video generation, but only after the user confirms they are an advanced Dreamina member who can use the CLI video workflow.
+After the board is ready, optionally hand it off to Dreamina（即梦） for video generation, but only after the user confirms that they are an advanced Dreamina member who can use the CLI video workflow.
 
 ## Default Operating Mode
 
@@ -30,13 +30,13 @@ After the board is ready, optionally hand it off to Dreamina（即梦） for vid
 
 ```json
 {
-  "subject": "主体描述",
-  "visual_style": "视觉风格",
-  "main_colors": ["主色"],
-  "movable_elements": ["可运动元素"],
-  "locked_elements": ["必须保持不变的元素"],
-  "motion_keywords": ["动效关键词"],
-  "avoid": ["禁止事项"]
+  "subject": "main subject description",
+  "visual_style": "visual style",
+  "main_colors": ["main colors"],
+  "movable_elements": ["movable parts"],
+  "locked_elements": ["identity-critical parts"],
+  "motion_keywords": ["motion keywords"],
+  "avoid": ["things to avoid"]
 }
 ```
 
@@ -57,19 +57,19 @@ After the board is ready, optionally hand it off to Dreamina（即梦） for vid
   "loop_length_seconds": 8,
   "camera": "locked",
   "loop_type": "seamless",
-  "motion_concept": "一句话动效核心",
+  "motion_concept": "one-sentence core motion idea",
   "phases": [
     {
       "index": 1,
       "time": "0.0-1.2s",
-      "label": "阶段名",
-      "action": "该阶段发生的运动",
-      "anchor": "保持不动的元素",
-      "transition": "如何自然接到下一阶段"
+      "label": "phase label",
+      "action": "what happens",
+      "anchor": "what stays stable",
+      "transition": "how it connects to the next phase"
     }
   ],
-  "continuity_strategy": "如何自然回到第一帧",
-  "avoid": ["不应出现的变化"]
+  "continuity_strategy": "how the final phase reconnects to the first phase",
+  "avoid": ["unwanted motion or drift"]
 }
 ```
 
@@ -95,6 +95,8 @@ After the board is ready, optionally hand it off to Dreamina（即梦） for vid
 - Keep the board professional, clean, and presentation-ready.
 - Use one large reference panel and 6 to 8 numbered motion stages, or one large panel with layered ghosted positions plus supporting stage tiles.
 - Add arrows, motion paths, ghost overlays, timing labels, and very short annotations.
+- For the human review board, prefer white or very light high-contrast arrows so the motion direction reads clearly against saturated character art and colorful backgrounds.
+- If the background is light, add a thin darker outline or soft shadow to the arrow before changing away from white.
 - Match the board language to the user's language unless the user asks for bilingual output.
 - Keep the subject visually consistent across all stages.
 - In every stage panel, keep the full subject visible unless the user explicitly asks for close-ups or cropped framing.
@@ -112,13 +114,17 @@ After the board is ready, optionally hand it off to Dreamina（即梦） for vid
 - If image generation is unavailable, output a full copy-ready prompt using [references/board-spec.md](./references/board-spec.md).
 - If the generation tool cannot reliably preserve exact text or logo details, say so briefly and strengthen the preservation instruction in the prompt.
 - If a first-pass board crops the subject in any stage, retry once with stronger framing language: `full body fully visible in every panel`, `no cropped limbs or hair`, `shrink figure to fit`, `keep 8 to 12 percent inner safe margin`.
+- Treat the first board as the human review board. It may contain arrows, labels, numbers, stage frames, and a timeline for readability.
+- In the human review board, white arrows are the preferred default unless they become unreadable against the local background.
+- If the user later proceeds to Dreamina video generation, derive a second `clean handoff board` when possible: preserve only the subject poses, ghosted motion states, and broad motion direction, while removing arrows, labels, numbers, captions, borders, timelines, and collage-style layout cues.
+- If a separate clean handoff board cannot be generated, keep using the annotated board but compensate with a stricter Dreamina prompt that explicitly forbids rendering board graphics into the final video.
 
 ### 7. Ask for Dreamina Membership
 
 - Once the board is ready, pause and ask one short, closed question before any Dreamina submission.
 - Use wording equivalent to: `如果继续生成视频，请先确认你是否是高级即梦会员？`
 - If the user says no, or says they are not sure, stop after delivering the board and the motion plan.
-- If the user says yes, continue directly into the Dreamina video workflow without asking a second “是否继续生成视频” question.
+- If the user says yes, continue directly into the Dreamina video workflow without asking a second `是否继续生成视频` question.
 - Do not continue to Dreamina just because the user likes the board.
 - Treat `高级即梦会员` as the required gate for the CLI video path.
 
@@ -128,9 +134,18 @@ After the board is ready, optionally hand it off to Dreamina（即梦） for vid
 - On Windows, prefer a local `dreamina.exe` or `dreamina` command instead of `curl ... | bash`.
 - Inspect `dreamina multimodal2video -h` and `dreamina query_result -h` before real execution when possible.
 - Default video path: use `multimodal2video` with the source image first and the motion breakdown board second.
+- When available, prefer `source image + clean handoff board` over `source image + annotated review board`.
 - Match the video ratio to the source image unless the user specifies another ratio.
 - Reuse the board's loop length. If the board is the default, use `8` seconds.
 - Prefer `seedance2.0fast` when the user wants a practical default. Use `seedance2.0` or `_vip` variants only when the user explicitly prefers quality or resolution.
+- Build a short, submission-ready Dreamina prompt that explicitly maps the two images: image 1 is the source subject, image 2 is the motion instruction image.
+- Use wording equivalent to `图一角色严格按照图二的动作说明生成循环动效` when the user wants close adherence to the board.
+- State that image 2 is an instruction reference only, not the final visual style or a collage to be rendered literally.
+- If image 2 contains white arrows or other direction marks, tell Dreamina to read them only as motion direction cues and never render those marks into the final video.
+- Explicitly forbid rendering arrows, numbers, labels, text, panel borders, timelines, stickers, or any board annotation graphics into the final video.
+- Re-state the identity lock when consistency matters: same character, same proportions, same materials, same costume, same color palette, same background logic, same camera.
+- Keep the video prompt short and action-first. Prefer 2 to 4 compact sentences over a long descriptive paragraph.
+- If the first Dreamina result turns board graphics into visible video elements, retry once with a stronger negative clause and, when possible, swap in a cleaner handoff board.
 - If the CLI still returns `current account is not maestro vip`, stop and tell the user that the server denied CLI generation even though they identified themselves as an advanced member.
 - Submit the task, save the `submit_id`, poll for completion, then download the finished media.
 - If available, use [scripts/submit_dreamina_video.ps1](./scripts/submit_dreamina_video.ps1) as the reusable wrapper.
@@ -142,6 +157,7 @@ After the board is ready, optionally hand it off to Dreamina（即梦） for vid
 - `Design note:` one compact paragraph or 3 to 5 short bullets.
 - `Board output:` either the generated board image or a fenced prompt block ready to paste into an image generator.
 - `Membership gate:` ask whether the user is an advanced Dreamina member; if yes, continue directly to video generation.
+- `Dreamina prompt:` only after the user confirms; include the final short prompt string used for submission.
 - `Video status:` only after the user confirms; include the chosen Dreamina route, `submit_id`, current state, and local download path when available.
 
 ## Quality Bar
@@ -152,3 +168,4 @@ After the board is ready, optionally hand it off to Dreamina（即梦） for vid
 - Make the loop feel cyclical rather than merely sequential.
 - Favor strong motion direction over flashy effects.
 - Never skip the advanced-member gate.
+- Do not let review-board graphics leak into the final video render.

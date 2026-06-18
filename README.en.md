@@ -13,6 +13,7 @@ It is not a video renderer and not a regular poster generator. Its primary outpu
 - Breaks the motion into `6 to 8 key phases`
 - Outputs a concise motion design note
 - Generates a static motion breakdown board
+- Can derive a cleaner Dreamina handoff board that strips arrows, labels, and timeline graphics when needed
 - Uses image generation directly when the environment supports it
 - Continues into Dreamina CLI video generation only after the user confirms they are an `advanced Dreamina member`
 
@@ -76,6 +77,8 @@ The skill prioritizes a static professional board before any video generation. T
 - short notes
 - a `0s -> 8s -> 0s` loop timeline
 
+The review board is optimized for human readability. If the workflow later continues to Dreamina, the skill can derive a cleaner handoff board with fewer overlay graphics.
+
 ### 4. Dreamina Video Branch
 
 If the user wants to continue to video generation, the skill first asks:
@@ -86,25 +89,32 @@ Branch rules:
 
 - If the user says `no`, the flow stops at the motion board.
 - If the user says `not sure`, the flow stops until the user verifies the account.
-- If the user says `yes`, the skill moves directly into the Dreamina CLI video workflow without asking a second “do you want to continue” question.
+- If the user says `yes`, the skill moves directly into the Dreamina CLI video workflow without asking a second continuation question.
 
 Even when the user says they are an advanced Dreamina member, the actual Dreamina CLI permission result is the final source of truth.
+
+When the flow continues to Dreamina, the skill now prefers:
+
+- image 1 = original source character image
+- image 2 = clean handoff board when available, or the annotated review board with a stricter negative prompt
+
+The Dreamina prompt should explicitly say that image 2 is a motion instruction reference, not a literal graphic layer to render into the final video. It should also explicitly forbid arrows, labels, numbers, borders, and timeline graphics from appearing in the output.
 
 ## Directory Structure
 
 ```text
 motion-breakdown-board-generator/
-├─ SKILL.md
-├─ README.md
-├─ README.en.md
-├─ LICENSE
-├─ agents/
-│  └─ openai.yaml
-├─ references/
-│  ├─ board-spec.md
-│  └─ dreamina-video-workflow.md
-└─ scripts/
-   └─ submit_dreamina_video.ps1
+├── SKILL.md
+├── README.md
+├── README.en.md
+├── LICENSE
+├── agents/
+│   └── openai.yaml
+├── references/
+│   ├── board-spec.md
+│   └── dreamina-video-workflow.md
+└── scripts/
+    └── submit_dreamina_video.ps1
 ```
 
 ## Important Files
@@ -156,6 +166,7 @@ This skill currently uses the project-level layout.
 - Dreamina video generation is an optional branch, not the default main path
 - The Dreamina branch expects the user to confirm they are an `advanced Dreamina member`
 - If Dreamina CLI returns a permission failure, the flow must stop
+- If Dreamina starts literalizing arrows, labels, or timeline graphics, retry with the cleaner handoff board plus the stricter negative prompt
 
 ## License
 
