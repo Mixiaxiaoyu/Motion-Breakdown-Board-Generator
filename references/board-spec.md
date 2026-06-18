@@ -15,8 +15,16 @@ Choose one dominant motion family and one supporting motion family. Avoid stacki
 ## Board Composition Rules
 
 - Prefer a 16:9 landscape board unless a portrait source clearly needs a taller layout.
+- For tall or full-body character art, prefer a roomier landscape board with taller stage tiles, or switch to a portrait-friendly board if that better preserves the full figure.
 - Keep one large source/reference panel.
 - Show 6 to 8 numbered motion stages.
+- For tall portrait characters, prefer 6 to 7 stages unless the user explicitly wants denser breakdown coverage.
+- Keep every stage figure fully inside its panel. No cropped head, hair, sleeves, hands, skirt hem, legs, feet, tail, or accessories.
+- Preserve head-to-toe visibility for full-body reference characters unless the user explicitly requests close-up framing.
+- Reserve an inner safe margin of roughly 8 to 12 percent around the subject in each stage panel.
+- If space becomes tight, shrink the character before shrinking the safe margin.
+- If arrows, labels, and callouts compete with the character, move the annotations outward first.
+- Give the rightmost and bottom-most stage panels extra breathing room because they are the most likely to be clipped by dense layouts.
 - Add arrows, motion paths, ghosted intermediate positions, timing tags, and compact callouts.
 - Include a small `0s -> 8s -> 0s` loop timeline.
 - Keep the visual language clean, neutral, and professional.
@@ -53,6 +61,13 @@ Board layout:
 - timing labels for each phase
 - a small 0s to 8s loop timeline
 
+Framing constraints:
+- every character instance must be fully visible head-to-toe inside its own panel
+- no cropped limbs, hair, sleeves, accessories, or feet
+- keep generous inner margins around the subject in each stage tile
+- if needed, reduce figure scale to fit the panel cleanly
+- prioritize subject completeness over dramatic zoom
+
 Motion concept:
 {motion_concept}
 
@@ -78,7 +93,7 @@ Stage labels:
 7. {phase_7_label} - {phase_7_action}
 
 Visual direction:
-clean professional motion design sheet, presentation-ready, precise graphic annotations, strong readability, polished layout, consistent subject across all stages, seamless loop logic visible from the last stage back to the first
+clean professional motion design sheet, presentation-ready, precise graphic annotations, strong readability, polished layout, consistent subject across all stages, seamless loop logic visible from the last stage back to the first, full character visibility in all stage panels, balanced spacing, no edge clipping
 
 Do not add unrelated scenery, extra characters, cinematic explosions, random particles, unnecessary light streaks, or unrelated FX.
 ```

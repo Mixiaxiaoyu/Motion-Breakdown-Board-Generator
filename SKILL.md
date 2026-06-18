@@ -48,6 +48,7 @@ After the board is ready, optionally hand it off to Dreamina（即梦） for vid
 - Keep the camera fixed unless the user explicitly requests camera motion.
 - Design the loop as a closed choreography: idle, initiation, expansion, peak, release, settle, reset.
 - Break the loop into 6 to 8 phases. Use 7 phases by default.
+- For tall full-body characters or dense annotation layouts, prefer 6 to 7 phases instead of forcing 8.
 - Ensure the last phase reconnects to phase 1 without a visible snap or discontinuity.
 - Create this internal structure:
 
@@ -96,6 +97,12 @@ After the board is ready, optionally hand it off to Dreamina（即梦） for vid
 - Add arrows, motion paths, ghost overlays, timing labels, and very short annotations.
 - Match the board language to the user's language unless the user asks for bilingual output.
 - Keep the subject visually consistent across all stages.
+- In every stage panel, keep the full subject visible unless the user explicitly asks for close-ups or cropped framing.
+- Treat head, hair ornaments, sleeves, hands, feet, tails, and long accessories as protected edges that must stay inside the panel.
+- If the source image is a full-body or near full-body character, preserve full-body readability in the stage panels as well.
+- If there is a conflict between larger figure scale and full subject visibility, reduce the figure scale first.
+- Prefer moving arrows and labels into surrounding whitespace before allowing any character crop.
+- For tall portrait characters, prefer a roomier two-row stage arrangement or taller stage tiles instead of dense shallow columns.
 - Do not turn the board into a film storyboard, comic page, or ad key visual.
 
 ### 6. Generate the Final Board or Fallback Prompt
@@ -104,6 +111,7 @@ After the board is ready, optionally hand it off to Dreamina（即梦） for vid
 - If the tool supports reference-image or image-edit workflows, use the uploaded image as the preservation anchor.
 - If image generation is unavailable, output a full copy-ready prompt using [references/board-spec.md](./references/board-spec.md).
 - If the generation tool cannot reliably preserve exact text or logo details, say so briefly and strengthen the preservation instruction in the prompt.
+- If a first-pass board crops the subject in any stage, retry once with stronger framing language: `full body fully visible in every panel`, `no cropped limbs or hair`, `shrink figure to fit`, `keep 8 to 12 percent inner safe margin`.
 
 ### 7. Ask for Dreamina Membership
 
